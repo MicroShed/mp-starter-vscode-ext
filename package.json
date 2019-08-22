@@ -44,6 +44,7 @@
 		"vscode": "^1.1.36"
 	},
 	"dependencies": {
-		"extract-zip": "^1.6.7"
+		"extract-zip": "^1.6.7",
+		"request": "^2.88.0"
 	}
 }
