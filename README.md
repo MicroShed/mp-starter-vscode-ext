@@ -1,67 +1,33 @@
-# microprofilestarter README
+# VS Code MicroProfile Starter Extension
 
-This is the README for "microprofilestarter", a VS Code extension for MicroProfile Starter (https://start.microprofile.io/).
+This is a VS Code extension for the MicroProfile Starter (https://start.microprofile.io/).  This extension makes use of the API https://test-start.microprofile.io/api/2.
 
-Proposed flow is described at https://docs.google.com/document/d/1qR4BZJ3eOfS3MOqwuIvs2CCIwMo-XECqmjt51B4DnYI/edit?usp=sharing and APIs at https://test-start.microprofile.io/api/1 can be used for now.
+## Input
 
-## Features
+The extension prompts for the following parameters:
+1. groupId
+2. artifactId 
+3. Java SE version
+4. MicroProfile server
+5. MicroProfile specifications
+6. A folder to generate the project into
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+The extension will generate a `.zip` file of the starter project, unzip the file into the specified directory and open it in a VS Code window.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installing the Extension
+- download the latest `mp-starter-vscode-ext-0.0.x.vsix` file from [releases](https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext/releases)
+- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
 
-\!\[feature X\]\(images/feature-x.png\)
+### Generate and install the .vsix file
+- `git clone git@github.com:dev-tools-for-enterprise-java/mp-starter-vscode-ext.git`
+- navigate to the cloned `mp-starter-vscode-ext` directory
+- `vsce package` to generate the `mp-starter-vscode-ext-0.0.x.vsix` file
+- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Start the extension in debug mode
+- Open this example in VS Code 1.25+
+- `npm install`
+- `F5` to start debugging
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## Contributing
+Our [CONTRIBUTING](CONTRIBUTING.md) document contains details for submitting pull requests.

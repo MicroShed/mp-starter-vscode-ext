@@ -1,5 +1,5 @@
 {
-	"name": "microprofilestarter",
+	"name": "mp-starter-vscode-ext",
 	"displayName": "MicroProfile Starter",
 	"description": "VS Code extension starter for Eclipse MicroProfile",
 	"version": "0.0.1",
