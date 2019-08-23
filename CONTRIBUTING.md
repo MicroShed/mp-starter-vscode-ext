@@ -14,7 +14,7 @@ A good bug report is one that make it easy for us to understand what you were tr
 
 ### Contributor License Agreement
 
-In order for us to accept pull-requests, the contributor must first complete a Contributor License Agreement (CLA). Please see our [CLA folder](./cla) for more information.
+In order for us to accept pull-requests, the contributor must first complete a Contributor License Agreement (CLA). Please see our [CLA folder](cla) for more information.
 
 This clarifies the intellectual property license granted with any contribution. It is for your protection as a Contributor as well as the protection of IBM and its customers; it does not change your rights to use your own Contributions for any other purpose.
 
