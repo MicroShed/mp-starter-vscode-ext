@@ -3,7 +3,7 @@
 We welcome contributions, and request you follow these guidelines.
 
  - [Raising issues](#raising-issues)
- - [Contributor License Agreement](#contributor-license-agreement)
+ - [Legal](#legal)
  - [Coding Standards](#coding-standards)
 
 ## Raising issues
@@ -12,11 +12,26 @@ Please raise any bug reports on the [issue tracker](https://github.com/dev-tools
 
 A good bug report is one that make it easy for us to understand what you were trying to do and what went wrong. Provide as much context as possible so we can try to recreate the issue.
 
-### Contributor License Agreement
+### Legal
 
-In order for us to accept pull-requests, the contributor must first complete a Contributor License Agreement (CLA). Please see our [CLA folder](cla) for more information.
+In order to make contribution as easy as possible, we follow the same approach as the he [Developer's Certificate of Origin 1.1 (DCO)](https://developercertificate.org/) - that the Linux® Kernel [community](https://elinux.org/Developer_Certificate_Of_Origin) uses to manage code contributions.
 
-This clarifies the intellectual property license granted with any contribution. It is for your protection as a Contributor as well as the protection of IBM and its customers; it does not change your rights to use your own Contributions for any other purpose.
+We simply ask that when submitting a pull request for review, the developer
+must include a sign-off statement in the commit message.
+
+Here is an example Signed-off-by line, which indicates that the
+submitter accepts the DCO:
+
+```text
+Signed-off-by: John Doe <john.doe@example.com>
+```
+
+You can include this automatically when you commit a change to your
+local git repository using the following command:
+
+```bash
+git commit -s
+```
 
 ### Coding Standards
 
@@ -25,3 +40,4 @@ This project follows standard TypeScript language [coding conventions](https://g
 Please note:
  - all PRs must pass TypeScript linting checks
  - all PRs must have passing builds
+
