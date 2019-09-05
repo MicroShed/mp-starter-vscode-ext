@@ -14,7 +14,12 @@
 		"vscode": "^1.35.0"
 	},
 	"categories": [
-		"Other"
+		"Programming Languages"
+	],
+	"keywords": [
+		"Eclipse",
+		"Java",
+		"MicroProfile"
 	],
 	"icon": "images/microprofile-logo.png",
 	"activationEvents": [

@@ -2,6 +2,10 @@
 
 This is a VS Code extension for the MicroProfile Starter (https://start.microprofile.io/).  This extension makes use of the API https://test-start.microprofile.io/api/2.
 
+## Quick Start
+* Install the extension 
+* Launch the VS Code command palette, select `MicroProfile Starter` to run the extension
+
 ## Input
 
 The extension prompts for the following parameters:
@@ -13,25 +17,6 @@ The extension prompts for the following parameters:
 6. A folder to generate the project into
 
 The extension will generate a `.zip` file of the starter project, unzip the file into the specified directory and open it in a VS Code window.
-
-## Installing the Extension
-- download the latest `mp-starter-vscode-ext-0.x.0.vsix` file from [releases](https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext/releases)
-- from VS Code, go to the Extensions view, click on the ellipsis "..." icon, select `Install from vsix...` and select the `mp-starter-vscode-ext-0.x.0.vsix` file
-
-### Running the extension
-- Launch VS Code command palette and search for "MicroProfile"
-- Select "MicroProfile Starter" to run the extension
-
-### Generate and install the .vsix file
-- `git clone git@github.com:MicroShed/mp-starter-vscode-ext.git`
-- navigate to the cloned `mp-starter-vscode-ext` directory
-- `vsce package` to generate the `mp-starter-vscode-ext-0.x.0.vsix` file
-- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.x.0.vsix` file
-
-### Start the extension in debug mode
-- Open this example in VS Code 1.25+
-- `npm install`
-- `F5` to start debugging
 
 ## Contributing
 Our [CONTRIBUTING](CONTRIBUTING.md) document contains details for submitting pull requests.
