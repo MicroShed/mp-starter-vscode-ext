@@ -2,13 +2,13 @@
 	"name": "mp-starter-vscode-ext",
 	"displayName": "MicroProfile Starter",
 	"description": "VS Code extension starter for Eclipse MicroProfile",
-	"version": "0.0.1",
-	"publisher": "IBM",
+	"version": "0.1.0",
+	"publisher": "MicroShed",
 	"preview": true,
 	"license": "EPL-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext"
+		"url": "https://github.com/MicroShed/mp-starter-vscode-ext"
 	},
 	"engines": {
 		"vscode": "^1.35.0"

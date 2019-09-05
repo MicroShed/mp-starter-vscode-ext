@@ -15,18 +15,18 @@ The extension prompts for the following parameters:
 The extension will generate a `.zip` file of the starter project, unzip the file into the specified directory and open it in a VS Code window.
 
 ## Installing the Extension
-- download the latest `mp-starter-vscode-ext-0.0.x.vsix` file from [releases](https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext/releases)
-- from VS Code, go to the Extensions view, click on the ellipsis "..." icon, select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
+- download the latest `mp-starter-vscode-ext-0.x.0.vsix` file from [releases](https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext/releases)
+- from VS Code, go to the Extensions view, click on the ellipsis "..." icon, select `Install from vsix...` and select the `mp-starter-vscode-ext-0.x.0.vsix` file
 
 ### Running the extension
 - Launch VS Code command palette and search for "MicroProfile"
 - Select "MicroProfile Starter" to run the extension
 
 ### Generate and install the .vsix file
-- `git clone git@github.com:dev-tools-for-enterprise-java/mp-starter-vscode-ext.git`
+- `git clone git@github.com:MicroShed/mp-starter-vscode-ext.git`
 - navigate to the cloned `mp-starter-vscode-ext` directory
-- `vsce package` to generate the `mp-starter-vscode-ext-0.0.x.vsix` file
-- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
+- `vsce package` to generate the `mp-starter-vscode-ext-0.x.0.vsix` file
+- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.x.0.vsix` file
 
 ### Start the extension in debug mode
 - Open this example in VS Code 1.25+
