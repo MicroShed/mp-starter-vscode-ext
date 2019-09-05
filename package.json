@@ -2,7 +2,7 @@
 	"name": "mp-starter-vscode-ext",
 	"displayName": "MicroProfile Starter",
 	"description": "VS Code extension starter for Eclipse MicroProfile",
-	"version": "0.1",
+	"version": "0.1.0",
 	"publisher": "MicroShed",
 	"preview": true,
 	"license": "EPL-2.0",
