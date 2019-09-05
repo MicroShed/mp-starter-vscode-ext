@@ -16,7 +16,11 @@ The extension will generate a `.zip` file of the starter project, unzip the file
 
 ## Installing the Extension
 - download the latest `mp-starter-vscode-ext-0.0.x.vsix` file from [releases](https://github.com/dev-tools-for-enterprise-java/mp-starter-vscode-ext/releases)
-- from VS Code select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
+- from VS Code, go to the Extensions view, click on the ellipsis "..." icon, select `Install from vsix...` and select the `mp-starter-vscode-ext-0.0.x.vsix` file
+
+### Running the extension
+- Launch VS Code command palette and search for "MicroProfile"
+- Select "MicroProfile Starter" to run the extension
 
 ### Generate and install the .vsix file
 - `git clone git@github.com:dev-tools-for-enterprise-java/mp-starter-vscode-ext.git`
