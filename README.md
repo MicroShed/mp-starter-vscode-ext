@@ -4,7 +4,7 @@ This is a VS Code extension for the MicroProfile Starter (https://start.micropro
 
 ## Quick Start
 * Install the extension 
-* Launch the VS Code command palette, select `MicroProfile Starter` to run the extension
+* Launch the VS Code command palette, then select `MicroProfile Starter` to run the extension
 
 ## Input
 
