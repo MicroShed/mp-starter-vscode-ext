@@ -1,6 +1,6 @@
 # VS Code MicroProfile Starter Extension
 
-A VS Code extension for the MicroProfile Starter (https://start.microprofile.io/).  The MicroProfile Starter is a community effort by the MicroProfile community.  This extension is hosted under the MicroShed organization.  This extension makes use of the API https://start.microprofile.io/api/2.  
+The MicroProfile Starter extension provides support for generating a MicroProfile Maven project with examples based on the Eclipse MicroProfile Starter project (https://start.microprofile.io/) by the MicroProfile community. You will be able to generate a project by choosing a MicroProfile version, server and specifications, such as CDI, Config, Health Check, Metrics, and more.  This extension is hosted under the MicroShed organization. 
 
 ## Quick Start
 * Install the extension 
