@@ -1,6 +1,6 @@
 # VS Code MicroProfile Starter Extension
 
-This is a VS Code extension for the MicroProfile Starter (https://start.microprofile.io/).  This extension makes use of the API https://test-start.microprofile.io/api/2.
+A VS Code extension for the MicroProfile Starter (https://start.microprofile.io/).  The MicroProfile Starter is a community effort by the MicroProfile community.  This extension is hosted under the MicroShed organization.  This extension makes use of the API https://start.microprofile.io/api/2.  
 
 ## Quick Start
 * Install the extension 

@@ -17,7 +17,7 @@ export async function generateProject(): Promise<void> {
     var request = require('request');
 
     var supportMatrixOptions = {
-        url: 'https://test-start.microprofile.io/api/2/supportMatrix'
+        url: 'https://start.microprofile.io/api/2/supportMatrix'
     };
 
     async function getSupportMatrix(error: any, response: { statusCode: number; }, body: any) {
@@ -152,7 +152,7 @@ export async function generateProject(): Promise<void> {
             };
 
             var options = {
-                url: 'https://test-start.microprofile.io/api/1/project',
+                url: 'https://start.microprofile.io/api/2/project',
                 method: 'POST',
                 headers: headers,
                 body: dataString
@@ -186,6 +186,8 @@ export async function generateProject(): Promise<void> {
             }
 
             await request(options, callback).pipe(fs.createWriteStream(targetDir + '/' + artifactId + '.zip'));
+        } else {
+            vscode.window.showErrorMessage(error);
         }
     }
     request(supportMatrixOptions, getSupportMatrix);
