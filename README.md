@@ -4,7 +4,7 @@ The MicroProfile Starter extension provides support for generating a MicroProfil
 
 ## Quick Start
 * Install the extension 
-* Launch the VS Code command palette, then select `MicroProfile Starter` to run the extension
+* Launch the VS Code command palette, then select `MicroProfile: MicroProfile Starter` to run the extension
 
 ## Input
 
@@ -14,7 +14,7 @@ The extension prompts for the following parameters:
 3. Java SE version
 4. MicroProfile server
 5. MicroProfile specifications
-6. A folder to generate the project into
+6. A directory to generate the project into
 
 The extension will generate a `.zip` file of the starter project, unzip the file into the specified directory and open it in a VS Code window.
 
