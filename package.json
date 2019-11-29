@@ -30,7 +30,7 @@
 		"commands": [
 			{
 				"command": "extension.microProfileStarter",
-				"title": "MicroProfile Starter"
+				"title": "MicroProfile: MicroProfile Starter"
 			}
 		]
 	},
