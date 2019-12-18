@@ -27,9 +27,13 @@ export async function generateProject(): Promise<void> {
 
             var mpDict = JSON.parse(body);
             var mpVersions = Object.keys(mpDict.configs);
-
             // get descriptive values of MicroProfile Versions
             let mpVersionsMapped = await mapToPropertiesFile("mpVersions", mpVersions);
+            // if one of the versions is null, remove it from the list
+            let filterdArray = mpVersionsMapped.filter(x => x != null) as string[];
+            if (filterdArray.length !== mpVersionsMapped.length) {
+                mpVersionsMapped = filterdArray;
+            }
 
             // prompt for groupId
             const groupId: string | undefined = await vscode.window.showInputBox(Object.assign({
