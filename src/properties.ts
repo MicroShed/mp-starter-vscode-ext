@@ -1,4 +1,5 @@
 const mpVersions = {
+    MP32: 'version 3.2',
     MP30: 'version 3.0',
     MP22: 'version 2.2',
     MP21: 'version 2.1',

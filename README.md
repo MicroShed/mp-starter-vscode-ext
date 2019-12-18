@@ -12,9 +12,10 @@ The extension prompts for the following parameters:
 1. groupId
 2. artifactId 
 3. Java SE version
-4. MicroProfile server
-5. MicroProfile specifications
-6. A folder to generate the project into
+4. MicroProfile version
+5. MicroProfile server
+6. MicroProfile specifications
+7. A folder to generate the project into
 
 The extension will generate a `.zip` file of the starter project, unzip the file into the specified directory and open it in a VS Code window.
 
