@@ -5,7 +5,7 @@
 	"version": "0.2.1",
 	"publisher": "MicroProfile-Community",
 	"preview": true,
-	"license": "Apache 2.0",
+	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/MicroShed/mp-starter-vscode-ext"
