@@ -48,6 +48,7 @@
     "@types/extract-zip": "^1.6.2",
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.5.4",
     "@types/request-promise": "^4.1.45",
     "@typescript-eslint/eslint-plugin": "^2.17.0",
     "@typescript-eslint/parser": "^2.17.0",
@@ -57,7 +58,6 @@
   },
   "dependencies": {
     "extract-zip": "^1.6.7",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "node-fetch": "^2.6.0"
   }
 }

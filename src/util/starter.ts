@@ -1,16 +1,17 @@
 import * as vscode from "vscode";
-import * as rp from "request-promise";
-import * as request from "request";
-import * as fs from "fs";
 import * as extract from "extract-zip";
 import * as util from "./util";
+import fetch from "node-fetch";
 
 export async function generateProject(): Promise<void> {
   try {
-    const response = await rp.get("https://start.microprofile.io/api/2/supportMatrix");
-    const mpSupportMatrix = JSON.parse(response);
+    const mpSupportResponse = await fetch("https://start.microprofile.io/api/2/supportMatrix");
+    if (mpSupportResponse.status >= 400 && mpSupportResponse.status < 600) {
+      throw new Error(`Bad response from server ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
+    }
+    const mpSupportMatrix = await mpSupportResponse.json();
 
-    // map of MP version -> mp configuration
+    // mpConfigurations is a map of mp version -> mp configuration
     const mpConfigurations = mpSupportMatrix.configs;
     const allMpVersions = Object.keys(mpConfigurations);
 
@@ -78,25 +79,21 @@ export async function generateProject(): Promise<void> {
       body: JSON.stringify(requestPayload),
     };
 
-    // TODO: Move to streaming API so entire ZIP does not have to be loaded in memory.
-    request(requestOptions, (err) => {
-      if (!err) {
-        extract(zipPath, { dir: targetDirString }, async function (err: any) {
-          // extraction is complete
-          if (err !== undefined) {
-            vscode.window.showErrorMessage("Could not extract the MicroProfile starter project.");
-          } else {
-            // open the unzipped folder in a new VS Code window
-            const uri = vscode.Uri.file(targetDirString + "/" + artifactId);
-            const openInNewWindow = vscode.workspace.workspaceFolders !== undefined;
-            await vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow);
-          }
+    // downloads the file to the given path using streams to avoid
+    // loading entire file into memory
+    await util.downloadFile(requestOptions, zipPath);
 
-        });
+    extract(zipPath, { dir: targetDirString }, async function (err: any) {
+      if (err !== undefined) {
+        console.error(err);
+        vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
       } else {
-        vscode.window.showErrorMessage("Could not generate an MicroProfile starter project.");
+        // open the unzipped folder in a new VS Code window
+        const uri = vscode.Uri.file(targetDirString + "/" + artifactId);
+        const openInNewWindow = vscode.workspace.workspaceFolders !== undefined;
+        await vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow);
       }
-    }).pipe(fs.createWriteStream(zipPath));
+    });
 
   } catch (e) {
     console.error(e);
