@@ -57,7 +57,7 @@ export async function generateProject(): Promise<void> {
 
     const targetDirString = targetFolder.fsPath;
 
-    const payload = {
+    const requestPayload = {
       groupId: groupId,
       artifactId: artifactId,
       mpVersion: mpVersion,
@@ -75,12 +75,11 @@ export async function generateProject(): Promise<void> {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(requestPayload),
     };
 
     // TODO: Move to streaming API so entire ZIP does not have to be loaded in memory.
-    request(requestOptions, (err, body) => {
-      console.log(body);
+    request(requestOptions, (err) => {
       if (!err) {
         extract(zipPath, { dir: targetDirString }, async function (err: any) {
           // extraction is complete

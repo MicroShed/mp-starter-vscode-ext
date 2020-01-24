@@ -2,7 +2,8 @@ import * as vscode from "vscode";
 import {
 	OpenDialogOptions,
 	Uri,
-	window
+	window,
+	QuickPickItem
 } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS } from "../properties";
 
@@ -54,7 +55,7 @@ export async function askForJavaSEVersion(): Promise<string | undefined> {
 }
 
 export async function askForMPVersion(mpVersions: string[]): Promise<string | undefined> {
-	interface MPVersionOption extends vscode.QuickPickItem {
+	interface MPVersionOption extends QuickPickItem {
 		label: string; // label is the long-name that is displaed in vscode
 		version: string; // version is the shortname that is used internally by the microprofile starter api
 	}
@@ -82,7 +83,7 @@ export async function askForMPVersion(mpVersions: string[]): Promise<string | un
 }
 
 export async function askForMPserver(mpServers: string[]): Promise<string | undefined> {
-	interface MPServerOption extends vscode.QuickPickItem {
+	interface MPServerOption extends QuickPickItem {
 		label: string; // label is the long-name that is displaed in vscode
 		server: string; // server is the shortname that is used internally by the microprofile starter api
 	}
@@ -109,10 +110,10 @@ export async function askForMPserver(mpServers: string[]): Promise<string | unde
 }
 
 export async function askForMPSpecifications(specs: string[], specDescriptions: Record<string, string>): Promise<Array<string> | undefined> {
-	interface MPSpecOption extends vscode.QuickPickItem {
-		spec: string;
-		label: string;
-		detail: string;
+	interface MPSpecOption extends QuickPickItem {
+		spec: string; // spec is the shortname used internally my microprofile starter api
+		label: string; // name of mp spec 
+		detail: string; // description of mp spec
 	}
 
 	const mpSpecOptions: MPSpecOption[] = specs.map(spec => {
