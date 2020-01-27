@@ -80,8 +80,6 @@ export async function generateProject(): Promise<void> {
       body: JSON.stringify(requestPayload),
     };
 
-    // downloads the file to the given path using streams to avoid
-    // loading entire file into memory
     await util.downloadFile(requestOptions, zipPath);
 
     extract(zipPath, { dir: targetDirString }, async function(err: any) {
