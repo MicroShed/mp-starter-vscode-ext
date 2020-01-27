@@ -31,7 +31,7 @@
       {
         "command": "extension.microProfileStarter",
         "category": "MicroProfile",
-        "title": "Generate a new MicroProfile project"
+        "title": "Generate a new MicroProfile starter project"
       }
     ]
   },
