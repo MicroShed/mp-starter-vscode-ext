@@ -7,8 +7,9 @@ export async function generateProject(): Promise<void> {
   try {
     const mpSupportResponse = await fetch("https://start.microprofile.io/api/2/supportMatrix");
     if (mpSupportResponse.status >= 400 && mpSupportResponse.status < 600) {
-      throw new Error(`Bad response from server ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
+      throw new Error(`Bad response ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
     }
+
     const mpSupportMatrix = await mpSupportResponse.json();
 
     // mpConfigurations is a map of mp version -> mp configuration
@@ -35,23 +36,23 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    const allMpServersForVersion = mpConfigurations[mpVersion].supportedServers;
-
-    const mpServer = await util.askForMPserver(allMpServersForVersion);
+    // ask user to select one of the servers that are avalaible for the version of mp they selected
+    const mpServer = await util.askForMPserver(mpConfigurations[mpVersion].supportedServers);
     if (mpServer === undefined) {
       return;
     }
 
-    // all of the possible specs supported by the users selected version of microprofile
+    // ask user to pick a list of mp specifications to use for the given version of mp they selected
     const allSupportedSpecs = mpConfigurations[mpVersion].specs;
     const specDescriptions = mpSupportMatrix.descriptions;
-
     const mpSpecifications = await util.askForMPSpecifications(allSupportedSpecs, specDescriptions);
     if (mpSpecifications === undefined) {
       return;
     }
 
-    const targetFolder = await util.askForFolder({ openLabel: "Generate into this folder" });
+    const targetFolder = await util.askForFolder({
+      openLabel: "Generate into this folder",
+    });
     if (targetFolder === undefined) {
       return;
     }
@@ -74,7 +75,7 @@ export async function generateProject(): Promise<void> {
       url: "https://start.microprofile.io/api/2/project",
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(requestPayload),
     };
@@ -83,7 +84,7 @@ export async function generateProject(): Promise<void> {
     // loading entire file into memory
     await util.downloadFile(requestOptions, zipPath);
 
-    extract(zipPath, { dir: targetDirString }, async function (err: any) {
+    extract(zipPath, { dir: targetDirString }, async function(err: any) {
       if (err !== undefined) {
         console.error(err);
         vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
@@ -94,7 +95,6 @@ export async function generateProject(): Promise<void> {
         await vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow);
       }
     });
-
   } catch (e) {
     console.error(e);
     vscode.window.showErrorMessage("Failed to generate a MicroProfile starter project");
