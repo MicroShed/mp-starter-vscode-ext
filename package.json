@@ -1,56 +1,65 @@
 {
-	"name": "mp-starter-vscode-ext",
-	"displayName": "MicroProfile Starter",
-	"description": "VS Code extension starter for Eclipse MicroProfile",
-	"version": "0.2.1",
-	"publisher": "MicroProfile-Community",
-	"preview": true,
-	"license": "Apache-2.0",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/MicroShed/mp-starter-vscode-ext"
-	},
-	"engines": {
-		"vscode": "^1.35.0"
-	},
-	"categories": [
-		"Programming Languages"
-	],
-	"keywords": [
-		"Eclipse",
-		"Java",
-		"MicroProfile"
-	],
-	"icon": "images/microprofile-logo.png",
-	"activationEvents": [
-		"onCommand:extension.microProfileStarter"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.microProfileStarter",
-				"category": "MicroProfile",
-				"title": "MicroProfile Starter"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/mocha": "^2.2.42",
-		"@types/node": "^10.12.21",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.36"
-	},
-	"dependencies": {
-		"extract-zip": "^1.6.7",
-		"request": "^2.88.0"
-	}
+  "name": "mp-starter-vscode-ext",
+  "displayName": "MicroProfile Starter",
+  "description": "VS Code extension starter for Eclipse MicroProfile",
+  "version": "0.2.1",
+  "publisher": "MicroProfile-Community",
+  "preview": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MicroShed/mp-starter-vscode-ext"
+  },
+  "engines": {
+    "vscode": "^1.35.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "Eclipse",
+    "Java",
+    "MicroProfile"
+  ],
+  "icon": "images/microprofile-logo.png",
+  "activationEvents": [
+    "onCommand:extension.microProfileStarter"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.microProfileStarter",
+        "category": "MicroProfile",
+        "title": "Generate a new MicroProfile starter project"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+  },
+  "devDependencies": {
+    "@types/extract-zip": "^1.6.2",
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.5.4",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.36"
+  },
+  "dependencies": {
+    "extract-zip": "^1.6.7",
+    "node-fetch": "^2.6.0"
+  }
 }

@@ -1,5 +1,7 @@
 # VS Code MicroProfile Starter Extension
 
+[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version/MicroProfile-Community.mp-starter-vscode-ext.svg "Current Release")](https://marketplace.visualstudio.com/items?itemName=MicroProfile-Community.mp-starter-vscode-ext)
+
 The MicroProfile Starter extension provides support for generating a MicroProfile Maven project with examples based on the Eclipse MicroProfile Starter project (https://start.microprofile.io/) by the MicroProfile community. You will be able to generate a project by choosing a MicroProfile version, server and specifications, such as CDI, Config, Health Check, Metrics, and more.  This extension is hosted under the MicroShed organization. 
 
 ## Quick Start
