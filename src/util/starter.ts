@@ -38,7 +38,7 @@ export async function generateProject(): Promise<void> {
     }
 
     // ask user to select one of the servers that are available for the version of mp they selected
-    const mpServer = await util.askForMPserver(mpConfigurations[mpVersion].supportedServers);
+    const mpServer = await util.askForMPServer(mpConfigurations[mpVersion].supportedServers);
     if (mpServer === undefined) {
       return;
     }

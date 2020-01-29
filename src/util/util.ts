@@ -79,7 +79,7 @@ export async function askForMPVersion(mpVersions: string[]): Promise<string | un
   return undefined;
 }
 
-export async function askForMPserver(mpServers: string[]): Promise<string | undefined> {
+export async function askForMPServer(mpServers: string[]): Promise<string | undefined> {
   interface MPServerOption extends QuickPickItem {
     label: string; // label is the long-name that is displayed in vscode
     server: string; // server is the short-name that is used internally by the microprofile starter api
