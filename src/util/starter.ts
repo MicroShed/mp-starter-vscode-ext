@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as extract from "extract-zip";
 import * as util from "./util";
+import * as path from "path";
 import fetch from "node-fetch";
 
 export async function generateProject(): Promise<void> {
@@ -36,7 +37,7 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    // ask user to select one of the servers that are avalaible for the version of mp they selected
+    // ask user to select one of the servers that are available for the version of mp they selected
     const mpServer = await util.askForMPserver(mpConfigurations[mpVersion].supportedServers);
     if (mpServer === undefined) {
       return;
@@ -68,8 +69,9 @@ export async function generateProject(): Promise<void> {
       selectedSpecs: mpSpecifications,
     };
 
+    const zipName = `${artifactId}.zip`;
     // location to download the zip file
-    const zipPath = targetDirString + "/" + artifactId + ".zip";
+    const zipPath = path.join(targetDirString, zipName);
 
     const requestOptions = {
       url: "https://start.microprofile.io/api/2/project",
@@ -88,7 +90,7 @@ export async function generateProject(): Promise<void> {
         vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
       } else {
         // open the unzipped folder in a new VS Code window
-        const uri = vscode.Uri.file(targetDirString + "/" + artifactId);
+        const uri = vscode.Uri.file(path.join(targetDirString, artifactId));
         const openInNewWindow = vscode.workspace.workspaceFolders !== undefined;
         await vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow);
       }

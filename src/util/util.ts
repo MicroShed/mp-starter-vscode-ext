@@ -52,13 +52,13 @@ export async function askForJavaSEVersion(): Promise<string | undefined> {
 
 export async function askForMPVersion(mpVersions: string[]): Promise<string | undefined> {
   interface MPVersionOption extends QuickPickItem {
-    label: string; // label is the long-name that is displaed in vscode
-    version: string; // version is the shortname that is used internally by the microprofile starter api
+    label: string; // label is the long-name that is displayed in vscode
+    version: string; // version is the short-name that is used internally by the microprofile starter api
   }
 
   const mpVersionOptions: MPVersionOption[] = [];
   for (const mpVersion of mpVersions) {
-    // if we have a label defined for the given MP version shortname add it to the options array
+    // if we have a label defined for the given MP version short-name add it to the options array
     if (MP_VERSION_LABELS[mpVersion] != null) {
       mpVersionOptions.push({
         label: MP_VERSION_LABELS[mpVersion],
@@ -81,13 +81,13 @@ export async function askForMPVersion(mpVersions: string[]): Promise<string | un
 
 export async function askForMPserver(mpServers: string[]): Promise<string | undefined> {
   interface MPServerOption extends QuickPickItem {
-    label: string; // label is the long-name that is displaed in vscode
-    server: string; // server is the shortname that is used internally by the microprofile starter api
+    label: string; // label is the long-name that is displayed in vscode
+    server: string; // server is the short-name that is used internally by the microprofile starter api
   }
 
   const mpServerOptions: MPServerOption[] = [];
   for (const mpServer of mpServers) {
-    // if we have a server label for the given mp server shortname add it to the options array
+    // if we have a server label for the given mp server short-name add it to the options array
     if (MP_SERVER_LABELS[mpServer] != null) {
       mpServerOptions.push({
         label: MP_SERVER_LABELS[mpServer],
@@ -112,7 +112,7 @@ export async function askForMPSpecifications(
   specDescriptions: Record<string, string>
 ): Promise<Array<string> | undefined> {
   interface MPSpecOption extends QuickPickItem {
-    spec: string; // spec is the shortname used internally my microprofile starter api
+    spec: string; // spec is the short-name used internally my microprofile starter api
     label: string; // name of mp spec
     detail: string; // description of mp spec
   }
@@ -123,7 +123,7 @@ export async function askForMPSpecifications(
     return {
       spec: spec,
       label: name,
-      detail: desc,
+      detail: trimCapitalizeFirstLetter(desc),
     };
   });
 
@@ -158,7 +158,7 @@ interface RequestOptions {
   url: string;
 }
 
-// Downloads a file using streams to avoid loading entire file into memowry
+// Downloads a file using streams to avoid loading entire file into memory
 export async function downloadFile(
   requestOptions: RequestOptions,
   downloadLocation: string
@@ -181,6 +181,7 @@ export async function downloadFile(
   });
 }
 
-export function capitalizeFirstLetter(newString: string): string {
-  return newString.charAt(0).toUpperCase() + newString.slice(1);
+export function trimCapitalizeFirstLetter(str: string): string {
+  const newStr = str.trim(); // remove any leading whitespace
+  return newStr.charAt(0).toUpperCase() + newStr.slice(1);
 }
