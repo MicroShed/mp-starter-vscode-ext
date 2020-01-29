@@ -1,7 +1,7 @@
 {
   "name": "mp-starter-vscode-ext",
   "displayName": "MicroProfile Starter",
-  "description": "VS Code extension starter for Eclipse MicroProfile",
+  "description": "Generate Java Microservice Maven projects using Eclipse MicroProfile",
   "version": "0.2.1",
   "publisher": "MicroProfile-Community",
   "preview": true,
@@ -19,9 +19,15 @@
   "keywords": [
     "Eclipse",
     "Java",
-    "MicroProfile"
+    "MicroProfile",
+    "Cloud Native",
+    "Microservices"
   ],
   "icon": "images/microprofile-logo.png",
+  "galleryBanner": {
+    "color": "#1d2f42",
+    "theme": "dark"
+  },
   "activationEvents": [
     "onCommand:extension.microProfileStarter"
   ],
