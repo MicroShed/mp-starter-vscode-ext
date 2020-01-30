@@ -21,6 +21,5 @@ describe("VS Code extension", () => {
       `onCommand:${MP_STARTER_COMMAND}`,
       `The ${MP_STARTER_COMMAND} command is not registered as an activation event in package.json`
     );
-    console.log(extensionPackageJSON);
   });
 });
