@@ -10,7 +10,7 @@ import * as vscode from "vscode";
 
 describe("VS Code extension", () => {
   it("should be present", () => {
-    expect(vscode.extensions.getExtension(MP_STARTER_IDENTIFIER)).to.be.ok;
+    expect(vscode.extensions.getExtension(MP_STARTER_IDENTIFIER)).to.exist;
   });
 
   it("should register an activation event", () => {
