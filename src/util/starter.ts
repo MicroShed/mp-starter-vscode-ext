@@ -98,18 +98,15 @@ export async function generateProject(): Promise<void> {
             // open the unzipped folder in a new VS Code window
             const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
             // prompt user whether they want to add project to current workspace or open in a new window
-            vscode.window
-              .showInformationMessage(
-                "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
-                ...["Add to current workspace", "Open in new window"]
-              )
-              .then(async selection => {
-                if (selection === "Add to current workspace") {
-                  vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
-                } else {
-                  await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
-                }
-              });
+            const selection = await vscode.window.showInformationMessage(
+              "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+              ...["Add to current workspace", "Open in new window"]
+            );
+            if (selection === "Add to current workspace") {
+              vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+            } else {
+              await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
+            }
           }
         });
       }
