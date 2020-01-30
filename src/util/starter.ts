@@ -82,19 +82,35 @@ export async function generateProject(): Promise<void> {
       body: JSON.stringify(requestPayload),
     };
 
-    await util.downloadFile(requestOptions, zipPath);
-
-    extract(zipPath, { dir: targetDirString }, async function(err: any) {
-      if (err !== undefined) {
-        console.error(err);
-        vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
-      } else {
-        // open the unzipped folder in a new VS Code window
-        const uri = vscode.Uri.file(path.join(targetDirString, artifactId));
-        const openInNewWindow = vscode.workspace.workspaceFolders !== undefined;
-        await vscode.commands.executeCommand("vscode.openFolder", uri, openInNewWindow);
+    // show a progress bar as the zip file is being downloaded
+    vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: "Generating the MicroProfile starter project...",
+      },
+      async () => {
+        await util.downloadFile(requestOptions, zipPath);
+        extract(zipPath, { dir: targetDirString }, async function(err: any) {
+          if (err !== undefined) {
+            console.error(err);
+            vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
+          } else {
+            // open the unzipped folder in a new VS Code window
+            const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
+            // prompt user whether they want to add project to current workspace or open in a new window
+            const selection = await vscode.window.showInformationMessage(
+              "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+              ...["Add to current workspace", "Open in new window"]
+            );
+            if (selection === "Add to current workspace") {
+              vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+            } else {
+              await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
+            }
+          }
+        });
       }
-    });
+    );
   } catch (e) {
     console.error(e);
     vscode.window.showErrorMessage("Failed to generate a MicroProfile starter project");
