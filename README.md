@@ -6,7 +6,7 @@ The MicroProfile Starter extension provides support for generating a MicroProfil
 
 ## Quick Start
 * Install the extension 
-* Launch the VS Code command palette, then select `MicroProfile Starter` to run the extension
+* Launch the VS Code command palette (View -> Command Palette...), then select `MicroProfile: Generate a new MicroProfile starter project` to run the extension
 
 ## Input
 
