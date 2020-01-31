@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import { pipeline } from "stream";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS } from "../properties";
+import { promisify } from "util";
 
 export async function askForGroupID(): Promise<string | undefined> {
   return await vscode.window.showInputBox({
@@ -180,6 +181,8 @@ export async function downloadFile(
     });
   });
 }
+
+export const deleteFile = promisify(fs.unlink);
 
 export function trimCapitalizeFirstLetter(str: string): string {
   const newStr = str.trim(); // remove any leading whitespace
