@@ -6,7 +6,7 @@ import fetch from "node-fetch";
 
 export async function generateProject(): Promise<void> {
   try {
-    const mpSupportResponse = await fetch("https://start.microprofile.io/api/2/supportMatrix");
+    const mpSupportResponse = await fetch("https://start.microprofile.io/api/3/supportMatrix");
     if (mpSupportResponse.status >= 400 && mpSupportResponse.status < 600) {
       throw new Error(`Bad response ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
     }
@@ -27,11 +27,6 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    const javaSEVersion = await util.askForJavaSEVersion();
-    if (javaSEVersion === undefined) {
-      return;
-    }
-
     const mpVersion = await util.askForMPVersion(allMpVersions);
     if (mpVersion === undefined) {
       return;
@@ -40,6 +35,11 @@ export async function generateProject(): Promise<void> {
     // ask user to select one of the servers that are available for the version of mp they selected
     const mpServer = await util.askForMPServer(mpConfigurations[mpVersion].supportedServers);
     if (mpServer === undefined) {
+      return;
+    }
+
+    const javaSEVersion = await util.askForJavaSEVersion(mpVersion);
+    if (javaSEVersion === undefined) {
       return;
     }
 
