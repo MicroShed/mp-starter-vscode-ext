@@ -3,6 +3,7 @@ import * as extract from "extract-zip";
 import * as util from "./util";
 import * as path from "path";
 import fetch from "node-fetch";
+import { OPEN_NEW_PROJECT_OPTIONS } from "../properties";
 
 export async function generateProject(): Promise<void> {
   try {
@@ -95,24 +96,27 @@ export async function generateProject(): Promise<void> {
             console.error(err);
             vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
           } else {
-            // open the unzipped folder in a new VS Code window
-            const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
-            // prompt user whether they want to add project to current workspace or open in a new window
-            const selection = await vscode.window.showInformationMessage(
-              "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
-              ...["Add to current workspace", "Open in new window"]
-            );
-            if (selection === "Add to current workspace") {
-              vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
-            } else {
-              await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
-            }
-
             try {
               await util.deleteFile(zipPath);
             } catch (e) {
               console.error(e);
               vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
+            }
+
+            // open the unzipped folder in a new VS Code window
+            const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
+            // prompt user whether they want to add project to current workspace or open in a new window
+            const selection = await vscode.window.showInformationMessage(
+              "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+              ...[
+                OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
+                OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
+              ]
+            );
+            if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
+              vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+            } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
+              await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
             }
           }
         });
