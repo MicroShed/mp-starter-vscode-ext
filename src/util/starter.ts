@@ -107,6 +107,13 @@ export async function generateProject(): Promise<void> {
             } else {
               await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
             }
+
+            try {
+              await util.deleteFile(zipPath);
+            } catch (e) {
+              console.error(e);
+              vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
+            }
           }
         });
       }
