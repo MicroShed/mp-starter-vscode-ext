@@ -14,10 +14,10 @@ The MicroProfile Starter extension provides support for generating a MicroProfil
 The extension prompts for the following parameters:
 
 1. groupId
-2. artifactId
-3. Java SE version
-4. MicroProfile version
-5. MicroProfile server
+2. artifactId 
+3. MicroProfile version
+4. MicroProfile server
+5. Java SE version
 6. MicroProfile specifications
 7. A folder to generate the project into
 
