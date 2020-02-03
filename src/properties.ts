@@ -18,3 +18,8 @@ export const MP_SERVER_LABELS: Record<string, string> = {
   TOMEE: "Apache TomEE 8.00-M2",
   WILDFLY_SWARM: "WildFly Swarm",
 };
+
+export const OPEN_NEW_PROJECT_OPTIONS = {
+  ADD_CURRENT_WORKSPACE: "Add to current workspace",
+  OPEN_NEW_WINDOW: "Open in new window",
+};
