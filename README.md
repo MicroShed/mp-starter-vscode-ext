@@ -30,16 +30,16 @@ Contributions to the MicroProfile starter extension are welcome!
 
 Our [CONTRIBUTING](CONTRIBUTING.md) document contains details for submitting pull requests.
 
-To build the extension locally:
+To build and run the extension locally:
 
 1. `git clone git@github.com:MicroShed/mp-starter-vscode-ext.git`
 2. `cd mp-starter-vscode-ext`
-3. Execute `npm install`
-4. Run the extension in Debug and Run mode by selecting `Run Extension` or `F5`
+3. `npm install`
+4. Run the extension in VS Code by selecting `Run Extension` from the debug panel or by pressing `F5`
 
    Alternatively, build a `.vsix` file:
 
-   - `vsce package` to generate the `mp-starter-vscode-ext-xxx.vsix` file
+   - Run `vsce package` to generate the `mp-starter-vscode-ext-xxx.vsix` file
    - Install the extension to VS Code by `View/Command Palette`
    - Select `Extensions: Install from VSIX...` and choose the generated `mp-starter-vscode-ext-xxx.vsix` file
 
