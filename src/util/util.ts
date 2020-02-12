@@ -42,21 +42,22 @@ export async function askForArtifactID(): Promise<string | undefined> {
   });
 }
 
-export async function askForJavaSEVersion(mpVersion: string): Promise<string | undefined> {
-  const SUPPORTED_JAVA_SE_VERSIONS = ["SE8"];
-  const SUPPORTED_JAVA_SE_VERSIONS_MP32 = ["SE8", "SE11"];
+export async function askForJavaSEVersion(
+  mpVersion: string,
+  mpServer: string
+): Promise<string | undefined> {
+  const MP32_JAVA_11_SUPPORTED = ["LIBERTY", "PAYARA_MICRO", "HELIDON", "THORNTAIL_V2"];
 
-  if (mpVersion === "MP32") {
-    return await vscode.window.showQuickPick(SUPPORTED_JAVA_SE_VERSIONS_MP32, {
-      ignoreFocusOut: true,
-      placeHolder: "Select a Java SE version.",
-    });
-  } else {
-    return await vscode.window.showQuickPick(SUPPORTED_JAVA_SE_VERSIONS, {
-      ignoreFocusOut: true,
-      placeHolder: "Select a Java SE version.",
-    });
+  let supportedJavaSEVersions = ["SE8"];
+
+  if (mpVersion === "MP32" && MP32_JAVA_11_SUPPORTED.includes(mpServer)) {
+    supportedJavaSEVersions = ["SE8", "SE11"];
   }
+
+  return await vscode.window.showQuickPick(supportedJavaSEVersions, {
+    ignoreFocusOut: true,
+    placeHolder: "Select a Java SE version.",
+  });
 }
 
 export async function askForMPVersion(mpVersions: string[]): Promise<string | undefined> {

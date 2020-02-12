@@ -17,6 +17,7 @@ export const MP_SERVER_LABELS: Record<string, string> = {
   KUMULUZEE: "KumuluzEE",
   TOMEE: "Apache TomEE 8.00-M2",
   WILDFLY_SWARM: "WildFly Swarm",
+  QUARKUS: "Quarkus",
 };
 
 export const OPEN_NEW_PROJECT_OPTIONS = {

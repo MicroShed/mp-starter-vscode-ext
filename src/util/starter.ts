@@ -39,7 +39,7 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    const javaSEVersion = await util.askForJavaSEVersion(mpVersion);
+    const javaSEVersion = await util.askForJavaSEVersion(mpVersion, mpServer);
     if (javaSEVersion === undefined) {
       return;
     }
