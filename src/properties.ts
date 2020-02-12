@@ -24,3 +24,5 @@ export const OPEN_NEW_PROJECT_OPTIONS = {
   ADD_CURRENT_WORKSPACE: "Add to current workspace",
   OPEN_NEW_WINDOW: "Open in new window",
 };
+
+export const EXTENSION_USER_AGENT = "Visual Studio Code";
