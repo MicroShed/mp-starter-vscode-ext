@@ -3,11 +3,16 @@ import * as extract from "extract-zip";
 import * as util from "./util";
 import * as path from "path";
 import fetch from "node-fetch";
-import { OPEN_NEW_PROJECT_OPTIONS } from "../properties";
+import { OPEN_NEW_PROJECT_OPTIONS, EXTENSION_USER_AGENT } from "../properties";
 
 export async function generateProject(): Promise<void> {
   try {
-    const mpSupportResponse = await fetch("https://start.microprofile.io/api/3/supportMatrix");
+    const mpSupportResponse = await fetch("https://start.microprofile.io/api/3/supportMatrix", {
+      method: "GET",
+      headers: {
+        "User-Agent": EXTENSION_USER_AGENT,
+      },
+    });
     if (mpSupportResponse.status >= 400 && mpSupportResponse.status < 600) {
       throw new Error(`Bad response ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
     }
@@ -79,6 +84,7 @@ export async function generateProject(): Promise<void> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "User-Agent": EXTENSION_USER_AGENT,
       },
       body: JSON.stringify(requestPayload),
     };
