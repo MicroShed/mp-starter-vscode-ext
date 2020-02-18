@@ -134,6 +134,12 @@ export async function generateProject(): Promise<void> {
     });
   } catch (e) {
     console.error(e);
-    vscode.window.showErrorMessage("Failed to generate a MicroProfile starter project");
+    if (e.name === "FetchError") {
+      vscode.window.showErrorMessage(
+        "Failed to connect to the microprofile starter. Please check your network connection and try again."
+      );
+    } else {
+      vscode.window.showErrorMessage("Failed to generate a MicroProfile starter project");
+    }
   }
 }
