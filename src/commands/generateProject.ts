@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as extract from "extract-zip";
-import * as util from "./util";
+import * as util from "../util/util";
+import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
 import fetch from "node-fetch";
 import { OPEN_NEW_PROJECT_OPTIONS, EXTENSION_USER_AGENT } from "../properties";
@@ -23,28 +24,28 @@ export async function generateProject(): Promise<void> {
     const mpConfigurations = mpSupportMatrix.configs;
     const allMpVersions = Object.keys(mpConfigurations);
 
-    const groupId = await util.askForGroupID();
+    const groupId = await prompts.askForGroupID();
     if (groupId === undefined) {
       return;
     }
 
-    const artifactId = await util.askForArtifactID();
+    const artifactId = await prompts.askForArtifactID();
     if (artifactId === undefined) {
       return;
     }
 
-    const mpVersion = await util.askForMPVersion(allMpVersions);
+    const mpVersion = await prompts.askForMPVersion(allMpVersions);
     if (mpVersion === undefined) {
       return;
     }
 
     // ask user to select one of the servers that are available for the version of mp they selected
-    const mpServer = await util.askForMPServer(mpConfigurations[mpVersion].supportedServers);
+    const mpServer = await prompts.askForMPServer(mpConfigurations[mpVersion].supportedServers);
     if (mpServer === undefined) {
       return;
     }
 
-    const javaSEVersion = await util.askForJavaSEVersion(mpVersion, mpServer);
+    const javaSEVersion = await prompts.askForJavaSEVersion(mpVersion, mpServer);
     if (javaSEVersion === undefined) {
       return;
     }
@@ -52,12 +53,15 @@ export async function generateProject(): Promise<void> {
     // ask user to pick a list of mp specifications to use for the given version of mp they selected
     const allSupportedSpecs = mpConfigurations[mpVersion].specs;
     const specDescriptions = mpSupportMatrix.descriptions;
-    const mpSpecifications = await util.askForMPSpecifications(allSupportedSpecs, specDescriptions);
+    const mpSpecifications = await prompts.askForMPSpecifications(
+      allSupportedSpecs,
+      specDescriptions
+    );
     if (mpSpecifications === undefined) {
       return;
     }
 
-    const targetFolder = await util.askForFolder({
+    const targetFolder = await prompts.askForFolder({
       openLabel: "Generate into this folder",
     });
     if (targetFolder === undefined) {
