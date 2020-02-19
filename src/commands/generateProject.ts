@@ -97,7 +97,7 @@ export async function generateProject(): Promise<void> {
     await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
-        title: "Generating the MicroProfile starter project...",
+        title: "Generating the MicroProfile Starter project...",
         cancellable: false,
       },
       () => util.downloadFile(requestOptions, zipPath)
@@ -106,7 +106,7 @@ export async function generateProject(): Promise<void> {
     extract(zipPath, { dir: targetDirString }, async function(err: any) {
       if (err !== undefined) {
         console.error(err);
-        vscode.window.showErrorMessage("Failed to extract the MicroProfile starter project.");
+        vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
       } else {
         try {
           await util.deleteFile(zipPath);
@@ -119,7 +119,7 @@ export async function generateProject(): Promise<void> {
         const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
         // prompt user whether they want to add project to current workspace or open in a new window
         const selection = await vscode.window.showInformationMessage(
-          "MicroProfile starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+          "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
           ...[
             OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
             OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
@@ -136,10 +136,10 @@ export async function generateProject(): Promise<void> {
     console.error(e);
     if (e.name === "FetchError") {
       vscode.window.showErrorMessage(
-        "Failed to connect to the microprofile starter. Please check your network connection and try again."
+        "Failed to connect to the MicroProfile Starter. Please check your network connection and try again."
       );
     } else {
-      vscode.window.showErrorMessage("Failed to generate a MicroProfile starter project");
+      vscode.window.showErrorMessage("Failed to generate a MicroProfile Starter project");
     }
   }
 }
