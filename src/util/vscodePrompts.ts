@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
-import { MP_SERVER_LABELS, MP_VERSION_LABELS } from "../properties";
+import { MP_SERVER_LABELS, MP_VERSION_LABELS } from "../constants";
 import { trimCapitalizeFirstLetter } from "./util";
 
 export async function askForGroupID(): Promise<string | undefined> {
