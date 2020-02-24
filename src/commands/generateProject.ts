@@ -4,11 +4,11 @@ import * as util from "../util/util";
 import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
 import fetch from "node-fetch";
-import { OPEN_NEW_PROJECT_OPTIONS, EXTENSION_USER_AGENT } from "../properties";
+import { MP_STARTER_API_ROOT, OPEN_NEW_PROJECT_OPTIONS, EXTENSION_USER_AGENT } from "../constants";
 
 export async function generateProject(): Promise<void> {
   try {
-    const mpSupportResponse = await fetch("https://start.microprofile.io/api/3/supportMatrix", {
+    const mpSupportResponse = await fetch(`${MP_STARTER_API_ROOT}/supportMatrix`, {
       method: "GET",
       headers: {
         "User-Agent": EXTENSION_USER_AGENT,
@@ -84,7 +84,7 @@ export async function generateProject(): Promise<void> {
     const zipPath = path.join(targetDirString, zipName);
 
     const requestOptions = {
-      url: "https://start.microprofile.io/api/2/project",
+      url: `${MP_STARTER_API_ROOT}/project`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
