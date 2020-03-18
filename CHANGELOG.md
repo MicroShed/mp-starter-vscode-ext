@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the MicroProfile Starter extension will be documented below.
 
+## 0.2.4
+- Use version 3 of the MicroProfile Starter API when generating a project
+- Update dependencies
+
 ## 0.2.3
 - Include user agent info in HTTP requests to the MicroProfile Starter API
 - Add support for Quarkus
