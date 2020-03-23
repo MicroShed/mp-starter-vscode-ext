@@ -103,7 +103,8 @@ export async function generateProject(): Promise<void> {
     );
 
     try {
-      await util.unzipFile(zipPath, targetDirString, zipName);
+      const targetDirFolder = path.join(targetDirString, artifactId);
+      await util.unzipFile(zipPath, targetDirString, targetDirFolder);
       try {
         await util.deleteFile(zipPath);
       } catch (e) {
@@ -112,7 +113,7 @@ export async function generateProject(): Promise<void> {
       }
 
       // open the unzipped folder in a new VS Code window
-      const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
+      const uriPath = vscode.Uri.file(targetDirFolder);
       // prompt user whether they want to add project to current workspace or open in a new window
       const selection = await vscode.window.showInformationMessage(
         "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",

@@ -2,7 +2,6 @@ import * as fs from "fs";
 import fetch from "node-fetch";
 import { pipeline } from "stream";
 import { promisify } from "util";
-import * as path from "path";
 import * as admZip from "adm-zip";
 
 interface RequestOptions {
@@ -44,18 +43,16 @@ export function trimCapitalizeFirstLetter(str: string): string {
 export async function unzipFile(
   zipPath: string,
   targetDir: string,
-  zipName: string
+  targetDirFolder: string
 ): Promise<void> {
   const zip = new admZip(zipPath);
   zip.extractAllTo(targetDir, false);
-  zipName = zipName.replace(/\.[^/.]+$/, ""); // trim .zip from the zipName
-  const zipFolder = path.resolve(targetDir, zipName);
-  const zipFolderExists = await exists(zipFolder);
+  const zipFolderExists = await exists(targetDirFolder);
   return new Promise((resolve, reject) => {
     if (zipFolderExists) {
       resolve();
     } else {
-      reject(new Error("Unable to extract zip folder: " + zipFolder));
+      reject(new Error("Unable to extract zip folder: " + targetDirFolder));
     }
   });
 }
