@@ -50,8 +50,7 @@ export async function unzipFile(
   zip.extractAllTo(targetDir, false);
   const zipFolder = path.resolve(zipPath, zipName);
   return new Promise((resolve, reject) => {
-    if (exists(zipFolder)) {
-      console.log("returning resolve");
+    if (await exists(zipFolder)) {
       resolve();
     } else {
       reject(new Error("Unable to extract zip folder: " + zipFolder));
