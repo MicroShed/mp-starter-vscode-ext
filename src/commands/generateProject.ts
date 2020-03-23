@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import * as extract from "extract-zip";
 import * as util from "../util/util";
 import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
@@ -103,11 +102,9 @@ export async function generateProject(): Promise<void> {
       () => util.downloadFile(requestOptions, zipPath)
     );
 
-    extract(zipPath, { dir: targetDirString }, async function(err: any) {
-      if (err !== undefined) {
-        console.error(err);
-        vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
-      } else {
+    util
+      .unzipFile(zipPath, targetDirString, zipName)
+      .then(async () => {
         try {
           await util.deleteFile(zipPath);
         } catch (e) {
@@ -130,8 +127,11 @@ export async function generateProject(): Promise<void> {
         } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
           await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
         }
-      }
-    });
+      })
+      .catch(err => {
+        console.error(err);
+        vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
+      });
   } catch (e) {
     console.error(e);
     if (e.name === "FetchError") {
