@@ -48,9 +48,11 @@ export async function unzipFile(
 ): Promise<void> {
   const zip = new admZip(zipPath);
   zip.extractAllTo(targetDir, false);
-  const zipFolder = path.resolve(zipPath, zipName);
+  zipName = zipName.replace(/\.[^/.]+$/, ""); // trim .zip from the zipName
+  const zipFolder = path.resolve(targetDir, zipName);
+  const zipFolderExists = await exists(zipFolder);
   return new Promise((resolve, reject) => {
-    if (await exists(zipFolder)) {
+    if (zipFolderExists) {
       resolve();
     } else {
       reject(new Error("Unable to extract zip folder: " + zipFolder));

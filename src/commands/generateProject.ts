@@ -102,36 +102,34 @@ export async function generateProject(): Promise<void> {
       () => util.downloadFile(requestOptions, zipPath)
     );
 
-    util
-      .unzipFile(zipPath, targetDirString, zipName)
-      .then(async () => {
-        try {
-          await util.deleteFile(zipPath);
-        } catch (e) {
-          console.error(e);
-          vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
-        }
+    try {
+      await util.unzipFile(zipPath, targetDirString, zipName);
+      try {
+        await util.deleteFile(zipPath);
+      } catch (e) {
+        console.error(e);
+        vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
+      }
 
-        // open the unzipped folder in a new VS Code window
-        const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
-        // prompt user whether they want to add project to current workspace or open in a new window
-        const selection = await vscode.window.showInformationMessage(
-          "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
-          ...[
-            OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
-            OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
-          ]
-        );
-        if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
-          vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
-        } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
-          await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
-      });
+      // open the unzipped folder in a new VS Code window
+      const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
+      // prompt user whether they want to add project to current workspace or open in a new window
+      const selection = await vscode.window.showInformationMessage(
+        "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+        ...[
+          OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
+          OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
+        ]
+      );
+      if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
+        vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+      } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
+        await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
+      }
+    } catch (err) {
+      console.error(err);
+      vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
+    }
   } catch (e) {
     console.error(e);
     if (e.name === "FetchError") {
