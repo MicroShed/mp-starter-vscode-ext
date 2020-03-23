@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import * as extract from "extract-zip";
 import * as util from "../util/util";
 import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
@@ -103,35 +102,35 @@ export async function generateProject(): Promise<void> {
       () => util.downloadFile(requestOptions, zipPath)
     );
 
-    extract(zipPath, { dir: targetDirString }, async function(err: any) {
-      if (err !== undefined) {
-        console.error(err);
-        vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
-      } else {
-        try {
-          await util.deleteFile(zipPath);
-        } catch (e) {
-          console.error(e);
-          vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
-        }
-
-        // open the unzipped folder in a new VS Code window
-        const uriPath = vscode.Uri.file(path.join(targetDirString, artifactId));
-        // prompt user whether they want to add project to current workspace or open in a new window
-        const selection = await vscode.window.showInformationMessage(
-          "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
-          ...[
-            OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
-            OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
-          ]
-        );
-        if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
-          vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
-        } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
-          await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
-        }
+    try {
+      const targetDirFolder = path.join(targetDirString, artifactId);
+      await util.unzipFile(zipPath, targetDirString, targetDirFolder);
+      try {
+        await util.deleteFile(zipPath);
+      } catch (e) {
+        console.error(e);
+        vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
       }
-    });
+
+      // open the unzipped folder in a new VS Code window
+      const uriPath = vscode.Uri.file(targetDirFolder);
+      // prompt user whether they want to add project to current workspace or open in a new window
+      const selection = await vscode.window.showInformationMessage(
+        "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
+        ...[
+          OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
+          OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
+        ]
+      );
+      if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
+        vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+      } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
+        await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
+      }
+    } catch (err) {
+      console.error(err);
+      vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
+    }
   } catch (e) {
     console.error(e);
     if (e.name === "FetchError") {

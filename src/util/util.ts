@@ -2,6 +2,7 @@ import * as fs from "fs";
 import fetch from "node-fetch";
 import { pipeline } from "stream";
 import { promisify } from "util";
+import * as admZip from "adm-zip";
 
 interface RequestOptions {
   url: string;
@@ -32,7 +33,26 @@ export async function downloadFile(
 
 export const deleteFile = promisify(fs.unlink);
 
+export const exists = promisify(fs.exists);
+
 export function trimCapitalizeFirstLetter(str: string): string {
   const newStr = str.trim();
   return newStr.charAt(0).toUpperCase() + newStr.slice(1);
+}
+
+export async function unzipFile(
+  zipPath: string,
+  targetDir: string,
+  targetDirFolder: string
+): Promise<void> {
+  const zip = new admZip(zipPath);
+  zip.extractAllTo(targetDir, false);
+  const zipFolderExists = await exists(targetDirFolder);
+  return new Promise((resolve, reject) => {
+    if (zipFolderExists) {
+      resolve();
+    } else {
+      reject(new Error("Unable to extract zip folder: " + targetDirFolder));
+    }
+  });
 }
