@@ -28,3 +28,8 @@ export const OPEN_NEW_PROJECT_OPTIONS = {
 };
 
 export const EXTENSION_USER_AGENT = "Visual Studio Code";
+
+export const CONFIRM = {
+  YES: "Yes",
+  NO: "No",
+};
