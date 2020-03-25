@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as path from "path";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS, CONFIRM_OPTIONS } from "../constants";
 import { trimCapitalizeFirstLetter, exists } from "./util";
@@ -168,9 +169,9 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
 
   const targetFolder = await askForFolder(customOptions);
 
-  if (targetFolder && (await exists(`${targetFolder.path}/${artifactId}`))) {
+  if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
     const selection = await askConfirmation(
-      `Folder ${artifactId} already exists inside the ${targetFolder.path} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be merged. Are you sure you want to generate into this folder?`
+      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be merged. Are you sure you want to generate into this folder?`
     );
     if (selection === CONFIRM_OPTIONS.YES) {
       return targetFolder;
