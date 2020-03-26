@@ -60,9 +60,7 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    const targetFolder = await prompts.askForFolder({
-      openLabel: "Generate into this folder",
-    });
+    const targetFolder = await prompts.askForTargetFolder(artifactId);
     if (targetFolder === undefined) {
       return;
     }

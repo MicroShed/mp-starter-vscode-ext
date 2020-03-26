@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
+import * as path from "path";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
-import { MP_SERVER_LABELS, MP_VERSION_LABELS } from "../constants";
-import { trimCapitalizeFirstLetter } from "./util";
+import { MP_SERVER_LABELS, MP_VERSION_LABELS, CONFIRM_OPTIONS } from "../constants";
+import { trimCapitalizeFirstLetter, exists } from "./util";
 
 export async function askForGroupID(): Promise<string | undefined> {
   return await vscode.window.showInputBox({
@@ -159,4 +160,33 @@ export async function askForFolder(customOptions: OpenDialogOptions): Promise<Ur
   }
 
   return undefined;
+}
+
+export async function askForTargetFolder(artifactId: string): Promise<Uri | undefined> {
+  const customOptions: OpenDialogOptions = {
+    openLabel: "Generate into this folder",
+  };
+
+  const targetFolder = await askForFolder(customOptions);
+
+  if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
+    const selection = await askConfirmation(
+      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be merged. Are you sure you want to generate into this folder?`
+    );
+    if (selection === CONFIRM_OPTIONS.YES) {
+      return targetFolder;
+    } else if (selection === CONFIRM_OPTIONS.NO) {
+      return await askForTargetFolder(artifactId);
+    }
+    return undefined;
+  }
+
+  return targetFolder;
+}
+
+export async function askConfirmation(message: string): Promise<string | undefined> {
+  return await vscode.window.showWarningMessage(
+    message,
+    ...[CONFIRM_OPTIONS.YES, CONFIRM_OPTIONS.NO]
+  );
 }
