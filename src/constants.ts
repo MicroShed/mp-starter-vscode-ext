@@ -18,6 +18,7 @@ export const MP_SERVER_LABELS: Record<string, string> = {
   THORNTAIL_V2: "Thorntail Version 2",
   KUMULUZEE: "KumuluzEE",
   TOMEE: "Apache TomEE 8.00-M2",
+  WILDFLY: "WildFly",
   WILDFLY_SWARM: "WildFly Swarm",
   QUARKUS: "Quarkus",
 };
