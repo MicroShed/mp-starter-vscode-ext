@@ -44,7 +44,7 @@ export async function askForJavaSEVersion(
   mpVersion: string,
   mpServer: string
 ): Promise<string | undefined> {
-  const MP32_JAVA_11_SUPPORTED = ["LIBERTY", "PAYARA_MICRO", "HELIDON", "THORNTAIL_V2"];
+  const MP32_JAVA_11_SUPPORTED = ["LIBERTY", "PAYARA_MICRO", "HELIDON", "THORNTAIL_V2", "WILDFLY"];
 
   let supportedJavaSEVersions = ["SE8"];
 
