@@ -2,12 +2,7 @@ import * as vscode from "vscode";
 import * as util from "../util/util";
 import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
-import {
-  MP_STARTER_API_ROOT,
-  OPEN_NEW_PROJECT_OPTIONS,
-  EXTENSION_USER_AGENT,
-  ERRORS,
-} from "../constants";
+import { OPEN_NEW_PROJECT_OPTIONS, ERRORS } from "../constants";
 import * as mpStarterApi from "../util/mpStarterApi";
 
 export async function generateProject(): Promise<void> {
@@ -63,7 +58,7 @@ export async function generateProject(): Promise<void> {
 
     const targetDirString = targetFolder.fsPath;
 
-    const requestPayload = {
+    const projectOptions = {
       groupId: groupId,
       artifactId: artifactId,
       mpVersion: mpVersion,
@@ -76,16 +71,6 @@ export async function generateProject(): Promise<void> {
     // location to download the zip file
     const zipPath = path.join(targetDirString, zipName);
 
-    const requestOptions = {
-      url: `${MP_STARTER_API_ROOT}/project`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": EXTENSION_USER_AGENT,
-      },
-      body: JSON.stringify(requestPayload),
-    };
-
     // show a progress bar as the zip file is being downloaded
     await vscode.window.withProgress(
       {
@@ -93,7 +78,7 @@ export async function generateProject(): Promise<void> {
         title: "Generating the MicroProfile Starter project...",
         cancellable: false,
       },
-      () => util.downloadFile(requestOptions, zipPath)
+      () => mpStarterApi.downloadMPStarterProjectZip(projectOptions, zipPath)
     );
 
     const targetDirFolder = path.join(targetDirString, artifactId);

@@ -1,5 +1,6 @@
 import { MP_STARTER_API_ROOT, EXTENSION_USER_AGENT } from "../constants";
 import fetch from "node-fetch";
+import * as util from "../util/util";
 
 interface MPVersionSupport {
   supportedServers: string[];
@@ -59,4 +60,30 @@ export async function getSupportedJavaAndSpecs(
   }
 
   return supportDetails;
+}
+
+interface MPStarterProjectOptions {
+  groupId: string;
+  artifactId: string;
+  mpVersion: string;
+  supportedServer: string;
+  javaSEVersion: string;
+  selectedSpecs: string[];
+}
+
+export async function downloadMPStarterProjectZip(
+  options: MPStarterProjectOptions,
+  downloadLocation: string
+): Promise<void> {
+  const requestOptions = {
+    url: `${MP_STARTER_API_ROOT}/project`,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "User-Agent": EXTENSION_USER_AGENT,
+    },
+    body: JSON.stringify(options),
+  };
+
+  await util.downloadFile(requestOptions, downloadLocation);
 }
