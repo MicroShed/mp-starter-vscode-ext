@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to the MicroProfile Starter extension will be documented below.
 
+## 0.2.5
+- MicroProfile 3.3
+- Support for generating a WildFly project
+- Better support for selecting a JavaSE version
+- Use version 4 of the MicroProfile Starter API 
+
 ## 0.2.4
 - Use version 3 of the MicroProfile Starter API when generating a project
 - Update dependencies
