@@ -56,13 +56,13 @@ export async function getSupportedJavaAndSpecs(
   );
 
   if (supportDetails === undefined) {
-    throw new Error("Error finding MicroProfile spec support");
+    throw new Error("Unable to find supported MicroProfile specifications and Java versions");
   }
 
   return supportDetails;
 }
 
-interface MPStarterProjectOptions {
+interface StarterProjectOptions {
   groupId: string;
   artifactId: string;
   mpVersion: string;
@@ -72,7 +72,7 @@ interface MPStarterProjectOptions {
 }
 
 export async function downloadMPStarterProjectZip(
-  options: MPStarterProjectOptions,
+  options: StarterProjectOptions,
   downloadLocation: string
 ): Promise<void> {
   const requestOptions = {

@@ -87,7 +87,7 @@ export async function generateProject(): Promise<void> {
       await util.unzipFile(zipPath, targetDirString, targetDirFolder);
     } catch (e) {
       console.error(e);
-      const err = new Error("Unable to extract MicroProfile Starter Project");
+      const err = new Error("Unable to extract MicroProfile Starter project");
       err.name = ERRORS.EXTRACT_PROJECT_ERROR;
       throw err;
     }
@@ -103,7 +103,7 @@ export async function generateProject(): Promise<void> {
     const uriPath = vscode.Uri.file(targetDirFolder);
     // prompt user whether they want to add project to current workspace or open in a new window
     const selection = await vscode.window.showInformationMessage(
-      "MicroProfile Starter project generated.  Would you like tPo add your project to the current workspace or open it in a new window?",
+      "MicroProfile Starter project generated.  Add your project to the current workspace or open it in a new window?",
       ...[OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE, OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW]
     );
     if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
