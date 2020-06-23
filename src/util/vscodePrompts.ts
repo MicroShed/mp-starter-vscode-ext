@@ -41,17 +41,8 @@ export async function askForArtifactID(): Promise<string | undefined> {
 }
 
 export async function askForJavaSEVersion(
-  mpVersion: string,
-  mpServer: string
+  supportedJavaSEVersions: string[]
 ): Promise<string | undefined> {
-  const MP32_JAVA_11_SUPPORTED = ["LIBERTY", "PAYARA_MICRO", "HELIDON", "THORNTAIL_V2", "WILDFLY"];
-
-  let supportedJavaSEVersions = ["SE8"];
-
-  if (mpVersion === "MP32" && MP32_JAVA_11_SUPPORTED.includes(mpServer)) {
-    supportedJavaSEVersions = ["SE8", "SE11"];
-  }
-
   return await vscode.window.showQuickPick(supportedJavaSEVersions, {
     ignoreFocusOut: true,
     placeHolder: "Select a Java SE version.",

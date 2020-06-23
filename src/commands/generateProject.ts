@@ -2,23 +2,12 @@ import * as vscode from "vscode";
 import * as util from "../util/util";
 import * as prompts from "../util/vscodePrompts";
 import * as path from "path";
-import fetch from "node-fetch";
-import { MP_STARTER_API_ROOT, OPEN_NEW_PROJECT_OPTIONS, EXTENSION_USER_AGENT } from "../constants";
+import { OPEN_NEW_PROJECT_OPTIONS, ERRORS } from "../constants";
+import * as mpStarterApi from "../util/mpStarterApi";
 
 export async function generateProject(): Promise<void> {
   try {
-    const mpSupportResponse = await fetch(`${MP_STARTER_API_ROOT}/supportMatrix`, {
-      method: "GET",
-      headers: {
-        "User-Agent": EXTENSION_USER_AGENT,
-      },
-    });
-    if (mpSupportResponse.status >= 400 && mpSupportResponse.status < 600) {
-      throw new Error(`Bad response ${mpSupportResponse.status}: ${mpSupportResponse.statusText}`);
-    }
-
-    const mpSupportMatrix = await mpSupportResponse.json();
-
+    const mpSupportMatrix = await mpStarterApi.getSupportMatrix();
     // mpConfigurations is a map of mp version -> mp configuration
     const mpConfigurations = mpSupportMatrix.configs;
     const allMpVersions = Object.keys(mpConfigurations);
@@ -44,18 +33,20 @@ export async function generateProject(): Promise<void> {
       return;
     }
 
-    const javaSEVersion = await prompts.askForJavaSEVersion(mpVersion, mpServer);
+    // gets support information about which JavaSE versions / microprofile specs are supported by the
+    // users selected mp server / mp version combination
+    const { javaSEVersions, mpSpecs } = await mpStarterApi.getSupportedJavaAndSpecs(
+      mpServer,
+      mpVersion
+    );
+
+    const javaSEVersion = await prompts.askForJavaSEVersion(javaSEVersions);
     if (javaSEVersion === undefined) {
       return;
     }
 
-    // ask user to pick a list of mp specifications to use for the given version of mp they selected
-    const allSupportedSpecs = mpConfigurations[mpVersion].specs;
     const specDescriptions = mpSupportMatrix.descriptions;
-    const mpSpecifications = await prompts.askForMPSpecifications(
-      allSupportedSpecs,
-      specDescriptions
-    );
+    const mpSpecifications = await prompts.askForMPSpecifications(mpSpecs, specDescriptions);
     if (mpSpecifications === undefined) {
       return;
     }
@@ -67,7 +58,7 @@ export async function generateProject(): Promise<void> {
 
     const targetDirString = targetFolder.fsPath;
 
-    const requestPayload = {
+    const projectOptions = {
       groupId: groupId,
       artifactId: artifactId,
       mpVersion: mpVersion,
@@ -80,16 +71,6 @@ export async function generateProject(): Promise<void> {
     // location to download the zip file
     const zipPath = path.join(targetDirString, zipName);
 
-    const requestOptions = {
-      url: `${MP_STARTER_API_ROOT}/project`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": EXTENSION_USER_AGENT,
-      },
-      body: JSON.stringify(requestPayload),
-    };
-
     // show a progress bar as the zip file is being downloaded
     await vscode.window.withProgress(
       {
@@ -97,44 +78,47 @@ export async function generateProject(): Promise<void> {
         title: "Generating the MicroProfile Starter project...",
         cancellable: false,
       },
-      () => util.downloadFile(requestOptions, zipPath)
+      () => mpStarterApi.downloadMPStarterProjectZip(projectOptions, zipPath)
     );
 
-    try {
-      const targetDirFolder = path.join(targetDirString, artifactId);
-      await util.unzipFile(zipPath, targetDirString, targetDirFolder);
-      try {
-        await util.deleteFile(zipPath);
-      } catch (e) {
-        console.error(e);
-        vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
-      }
+    const targetDirFolder = path.join(targetDirString, artifactId);
 
-      // open the unzipped folder in a new VS Code window
-      const uriPath = vscode.Uri.file(targetDirFolder);
-      // prompt user whether they want to add project to current workspace or open in a new window
-      const selection = await vscode.window.showInformationMessage(
-        "MicroProfile Starter project generated.  Would you like to add your project to the current workspace or open it in a new window?",
-        ...[
-          OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE,
-          OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW,
-        ]
-      );
-      if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
-        vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
-      } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
-        await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
-      }
-    } catch (err) {
-      console.error(err);
-      vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project.");
+    try {
+      await util.unzipFile(zipPath, targetDirString, targetDirFolder);
+    } catch (e) {
+      console.error(e);
+      const err = new Error("Unable to extract MicroProfile Starter project");
+      err.name = ERRORS.EXTRACT_PROJECT_ERROR;
+      throw err;
+    }
+
+    // if failed to delete the zip, no need to error out but show a warning to users
+    try {
+      await util.deleteFile(zipPath);
+    } catch (e) {
+      console.error(e);
+      vscode.window.showErrorMessage(`Failed to delete file ${zipName}`);
+    }
+
+    const uriPath = vscode.Uri.file(targetDirFolder);
+    // prompt user whether they want to add project to current workspace or open in a new window
+    const selection = await vscode.window.showInformationMessage(
+      "MicroProfile Starter project generated.  Add your project to the current workspace or open it in a new window?",
+      ...[OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE, OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW]
+    );
+    if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
+      vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+    } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
+      await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
     }
   } catch (e) {
     console.error(e);
-    if (e.name === "FetchError") {
+    if (e.name === ERRORS.FETCH_ERROR) {
       vscode.window.showErrorMessage(
         "Failed to connect to the MicroProfile Starter. Please check your network connection and try again."
       );
+    } else if (e.name === ERRORS.EXTRACT_PROJECT_ERROR) {
+      vscode.window.showErrorMessage("Failed to extract the MicroProfile Starter project");
     } else {
       vscode.window.showErrorMessage("Failed to generate a MicroProfile Starter project");
     }
