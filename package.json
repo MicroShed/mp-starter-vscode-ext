@@ -73,6 +73,6 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.14",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
