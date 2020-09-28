@@ -33,16 +33,20 @@ Our [CONTRIBUTING](CONTRIBUTING.md) document contains details for submitting pul
 
 To build and run the extension locally:
 
-1. `git clone git@github.com:MicroShed/mp-starter-vscode-ext.git`
-2. `cd mp-starter-vscode-ext`
-3. `npm install`
-4. Run the extension in VS Code by selecting `Run Extension` from the debug panel or by pressing `F5`
+1. [Fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) this repository
+2. Clone your fork: `git clone git@github.com:{your-username}/mp-starter-vscode-ext.git`
+3. `cd mp-starter-vscode-ext`
+4. Create a branch for the issue you are going to work on: `git checkout -b branch-name-for-your-issue`
+5. Install dependencies: `npm install`
+6. Run the extension in VS Code by selecting `Run Extension` from the debug panel or by pressing `F5`
 
    Alternatively, build a `.vsix` file:
 
    - Run `vsce package` to generate the `mp-starter-vscode-ext-xxx.vsix` file
    - Install the extension to VS Code by `View/Command Palette`
    - Select `Extensions: Install from VSIX...` and choose the generated `mp-starter-vscode-ext-xxx.vsix` file
+
+7. Run the generate project command by launching the VS Code command palette (View -> Command Palette...), then select `MicroProfile: Generate a new MicroProfile starter project` to run the extension
 
 ## Issues
 
