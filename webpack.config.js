@@ -3,6 +3,10 @@
 "use strict";
 
 const path = require("path");
+
+/**@type {import('webpack').Configuration}*/
+/* eslint @typescript-eslint/no-var-requires: "off" */
+
 const config = {
   target: "node",
   devtool: "source-map",
