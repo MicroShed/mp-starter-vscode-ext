@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS, CONFIRM_OPTIONS } from "../constants";
-import { trimCapitalizeFirstLetter, exists } from "./util";
+import { trimCapitalizeFirstLetter, exists, validateArtifactId, validateGroupId } from "./util";
 
 export async function askForGroupID(): Promise<string | undefined> {
   return await vscode.window.showInputBox({
@@ -10,34 +10,8 @@ export async function askForGroupID(): Promise<string | undefined> {
     prompt: "Specify a Group Id for your project.",
     value: "com.example",
     ignoreFocusOut: true,
-    validateInput: (value: string) => {
-      return validateGroupId(value);
-    },
+    validateInput: validateGroupId
   });
-}
-
-export async function validateGroupId(groupId: string): Promise<string | undefined> {
-  const re = new RegExp("^([a-zA-Z_$][a-zA-Z\\d_$]*\\.)*[a-zA-Z_$][a-zA-Z\\d_$]*$");
-  if (!re.test(groupId)) {
-    if (!/^[a-zA-Z_$]/.test(groupId)) {
-      return "Invalid groupId: A valid groupId must start with a character from A to z, or one of the following symbols: _$";
-    } else if (!/[a-zA-Z\\d_$]$/.test(groupId)) {
-      return "Invalid groupId: A valid groupId must end with a character from A to z, a number, or one of the following symbols: _$";
-    }
-    return "Invalid groupId: A valid groupId can only contain characters from A to z, numbers, and the following symbols: ._$";
-  }
-  return undefined;
-}
-
-export async function validateArtifactId(artifactId: string): Promise<string | undefined> {
-  const re = new RegExp("^[a-z][a-z0-9-._]*$");
-  if (!re.test(artifactId)) {
-    if (!/^[a-z]/.test(artifactId)) {
-      return "Invalid artifactId: A valid artifactId must start with a character from a-z";
-    }
-    return "Invalid artifactId: A valid artifactId can only contain characters from a-z, numbers, and the following symbols: -._";
-  }
-  return undefined;
 }
 
 export async function askForArtifactID(): Promise<string | undefined> {
@@ -46,9 +20,7 @@ export async function askForArtifactID(): Promise<string | undefined> {
     prompt: "Specify an Artifact Id for your project.",
     value: "demo",
     ignoreFocusOut: true,
-    validateInput: (value: string) => {
-      return validateArtifactId(value);
-    },
+    validateInput: validateArtifactId
   });
 }
 
