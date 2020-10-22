@@ -12,4 +12,5 @@ before_install:
     fi
 script:
   - npm run lint
+  - npm run test-compile
   - npm run test
