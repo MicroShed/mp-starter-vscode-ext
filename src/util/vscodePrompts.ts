@@ -162,7 +162,7 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
 
   if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
     // delete the existing folder.
-    await deleteFolder(path.join(targetFolder.fsPath, artifactId));
+    deleteFolder(path.join(targetFolder.fsPath, artifactId));
   }
 
   return targetFolder;
