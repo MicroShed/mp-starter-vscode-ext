@@ -10,7 +10,7 @@ export async function askForGroupID(): Promise<string | undefined> {
     prompt: "Specify a Group Id for your project.",
     value: "com.example",
     ignoreFocusOut: true,
-    validateInput: validateGroupId
+    validateInput: validateGroupId,
   });
 }
 
@@ -20,7 +20,7 @@ export async function askForArtifactID(): Promise<string | undefined> {
     prompt: "Specify an Artifact Id for your project.",
     value: "demo",
     ignoreFocusOut: true,
-    validateInput: validateArtifactId
+    validateInput: validateArtifactId,
   });
 }
 
