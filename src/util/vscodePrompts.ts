@@ -2,7 +2,13 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS, CONFIRM_OPTIONS } from "../constants";
-import { trimCapitalizeFirstLetter, exists, deleteFolder } from "./util";
+import {
+  trimCapitalizeFirstLetter,
+  exists,
+  deleteFolder,
+  validateArtifactId,
+  validateGroupId,
+} from "./util";
 
 export async function askForGroupID(): Promise<string | undefined> {
   return await vscode.window.showInputBox({
@@ -10,15 +16,7 @@ export async function askForGroupID(): Promise<string | undefined> {
     prompt: "Specify a Group Id for your project.",
     value: "com.example",
     ignoreFocusOut: true,
-    validateInput: (value: string) => {
-      if (value.trim().length === 0) {
-        return "Group Id is required";
-      }
-      if (value.indexOf(" ") >= 0) {
-        return "Group Id cannot contain a blank space";
-      }
-      return null;
-    },
+    validateInput: validateGroupId,
   });
 }
 
@@ -28,15 +26,7 @@ export async function askForArtifactID(): Promise<string | undefined> {
     prompt: "Specify an Artifact Id for your project.",
     value: "demo",
     ignoreFocusOut: true,
-    validateInput: (value: string) => {
-      if (value.trim().length === 0) {
-        return "Artifact Id is required";
-      }
-      if (value.indexOf(" ") >= 0) {
-        return "Artifact Id cannot contain a blank space";
-      }
-      return null;
-    },
+    validateInput: validateArtifactId,
   });
 }
 

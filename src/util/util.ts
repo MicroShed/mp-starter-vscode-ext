@@ -85,3 +85,31 @@ export async function unzipFile(
     }
   });
 }
+
+export async function validateGroupId(groupId: string): Promise<string | undefined> {
+  // regex referenced from
+  // https://github.com/redhat-developer/vscode-quarkus/blob/master/src/wizards/generateProject/validateInput.ts
+  const re = new RegExp("^([a-zA-Z_$][a-zA-Z\\d_$]*\\.)*[a-zA-Z_$][a-zA-Z\\d_$]*$");
+  if (!re.test(groupId)) {
+    if (!/^[a-zA-Z_$]/.test(groupId)) {
+      return "Invalid groupId: A valid groupId must start with a character from A to z, or one of the following symbols: _$";
+    } else if (!/[a-zA-Z\\d_$]$/.test(groupId)) {
+      return "Invalid groupId: A valid groupId must end with a character from A to z, a number, or one of the following symbols: _$";
+    }
+    return "Invalid groupId: A valid groupId can only contain characters from A to z, numbers, and the following symbols: ._$";
+  }
+  return undefined;
+}
+
+export async function validateArtifactId(artifactId: string): Promise<string | undefined> {
+  // regex referenced from
+  // https://github.com/redhat-developer/vscode-quarkus/blob/master/src/wizards/generateProject/validateInput.ts
+  const re = new RegExp("^[a-z][a-z0-9-._]*$");
+  if (!re.test(artifactId)) {
+    if (!/^[a-z]/.test(artifactId)) {
+      return "Invalid artifactId: A valid artifactId must start with a character from a-z";
+    }
+    return "Invalid artifactId: A valid artifactId can only contain characters from a-z, numbers, and the following symbols: -._";
+  }
+  return undefined;
+}
