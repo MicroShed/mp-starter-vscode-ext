@@ -108,6 +108,7 @@ export async function generateProject(): Promise<void> {
     );
     if (selection === OPEN_NEW_PROJECT_OPTIONS.ADD_CURRENT_WORKSPACE) {
       vscode.workspace.updateWorkspaceFolders(0, 0, { uri: uriPath });
+      vscode.commands.executeCommand("workbench.view.explorer");
     } else if (selection === OPEN_NEW_PROJECT_OPTIONS.OPEN_NEW_WINDOW) {
       await vscode.commands.executeCommand("vscode.openFolder", uriPath, true);
     }
