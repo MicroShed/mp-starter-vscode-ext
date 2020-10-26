@@ -167,7 +167,6 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
     } else if (selection === CONFIRM_OPTIONS.NO) {
       return await askForTargetFolder(artifactId);
     }
-    // return undefined;
   }
 
   return targetFolder;
