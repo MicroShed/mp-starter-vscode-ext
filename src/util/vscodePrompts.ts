@@ -151,8 +151,23 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
   const targetFolder = await askForFolder(customOptions);
 
   if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
-    // delete the existing folder.
-    deleteFolder(path.join(targetFolder.fsPath, artifactId));
+    const selection = await askConfirmation(
+      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be deleted. Are you sure you want to generate into this folder?`
+    );
+    if (selection === CONFIRM_OPTIONS.YES) {
+      // delete the existing folder.
+      try {
+        deleteFolder(path.join(targetFolder.fsPath, artifactId));
+      } catch (e) {
+        //the folder is in use
+        vscode.window.showErrorMessage(
+          `Failed to delete folder ${targetFolder.fsPath} because it is being used by another process.`
+        );
+      }
+    } else if (selection === CONFIRM_OPTIONS.NO) {
+      return await askForTargetFolder(artifactId);
+    }
+    // return undefined;
   }
 
   return targetFolder;
