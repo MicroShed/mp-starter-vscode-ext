@@ -161,7 +161,7 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
       } catch (e) {
         //the folder is in use
         vscode.window.showErrorMessage(
-          `Failed to delete folder ${targetFolder.fsPath} because it is being used by another process.`
+          `Failed to delete folder ${targetFolder.fsPath} because it is being used by another process. Failed to generate a MicroProfile Starter project.`
         );
       }
     } else if (selection === CONFIRM_OPTIONS.NO) {
