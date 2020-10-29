@@ -152,7 +152,7 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
 
   if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
     const selection = await askConfirmation(
-      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be deleted. Are you sure you want to generate into this folder?`
+      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. The ${artifactId} folder will be deleted and replaced with the generated MicroProfile Starter project. Are you sure you want to generate into this folder?`
     );
     if (selection === CONFIRM_OPTIONS.YES) {
       // delete the existing folder.
