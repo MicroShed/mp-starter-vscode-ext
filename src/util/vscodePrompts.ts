@@ -2,7 +2,13 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { OpenDialogOptions, Uri, window, QuickPickItem } from "vscode";
 import { MP_SERVER_LABELS, MP_VERSION_LABELS, CONFIRM_OPTIONS } from "../constants";
-import { trimCapitalizeFirstLetter, exists, validateArtifactId, validateGroupId } from "./util";
+import {
+  trimCapitalizeFirstLetter,
+  exists,
+  deleteFolder,
+  validateArtifactId,
+  validateGroupId,
+} from "./util";
 
 export async function askForGroupID(): Promise<string | undefined> {
   return await vscode.window.showInputBox({
@@ -146,14 +152,21 @@ export async function askForTargetFolder(artifactId: string): Promise<Uri | unde
 
   if (targetFolder && (await exists(path.join(targetFolder.fsPath, artifactId)))) {
     const selection = await askConfirmation(
-      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. Contents of the ${artifactId} folder and the generated MicroProfile Starter Project will be merged. Are you sure you want to generate into this folder?`
+      `Folder ${artifactId} already exists inside the ${targetFolder.fsPath} folder. The ${artifactId} folder will be deleted and replaced with the generated MicroProfile Starter project. Are you sure you want to generate into this folder?`
     );
     if (selection === CONFIRM_OPTIONS.YES) {
-      return targetFolder;
+      // delete the existing folder.
+      try {
+        deleteFolder(path.join(targetFolder.fsPath, artifactId));
+      } catch (e) {
+        //the folder is in use
+        vscode.window.showErrorMessage(
+          `Failed to delete folder ${targetFolder.fsPath} because it is being used by another process. Failed to generate a MicroProfile Starter project.`
+        );
+      }
     } else if (selection === CONFIRM_OPTIONS.NO) {
       return await askForTargetFolder(artifactId);
     }
-    return undefined;
   }
 
   return targetFolder;

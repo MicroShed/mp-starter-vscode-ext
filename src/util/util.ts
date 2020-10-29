@@ -3,6 +3,8 @@ import fetch from "node-fetch";
 import { pipeline } from "stream";
 import { promisify } from "util";
 import * as admZip from "adm-zip";
+import * as path from "path";
+import * as vscode from "vscode";
 
 interface RequestOptions {
   url: string;
@@ -30,6 +32,33 @@ export async function downloadFile(
     });
   });
 }
+
+export const deleteFolder = (parent: string) => {
+  if (fs.existsSync(parent)) {
+    //go through each element in the directory
+    fs.readdirSync(parent).forEach((entry, index) => {
+      const currentPath = path.join(parent, entry);
+      // if it is a file -> delete
+      //if it is directory -> drill down further and repeat
+      if (fs.lstatSync(currentPath).isDirectory()) {
+        deleteFolder(currentPath);
+      } else {
+        fs.unlinkSync(currentPath);
+      }
+    });
+    // finally remove parent directory
+    try {
+      fs.rmdirSync(parent);
+    } catch (e) {
+      vscode.workspace.workspaceFolders?.forEach((entry, index) => {
+        if (entry.name === parent) {
+          vscode.commands.executeCommand("workbench.action.removeRootFolder");
+          fs.rmdirSync(parent);
+        }
+      });
+    }
+  }
+};
 
 export const deleteFile = promisify(fs.unlink);
 
