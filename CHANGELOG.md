@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the MicroProfile Starter extension will be documented below.
 
+## 0.2.6
+- MicroProfile 4.0
+
 ## 0.2.5
 - MicroProfile 3.3
 - Support for generating a WildFly project
