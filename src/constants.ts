@@ -1,6 +1,7 @@
 export const MP_STARTER_API_ROOT = "https://start.microprofile.io/api/4";
 
 export const MP_VERSION_LABELS: Record<string, string> = {
+  MP40: "Version 4.0",
   MP33: "Version 3.3",
   MP32: "Version 3.2",
   MP30: "Version 3.0",
