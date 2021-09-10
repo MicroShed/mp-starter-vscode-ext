@@ -1,4 +1,4 @@
-export const MP_STARTER_API_ROOT = "https://start.microprofile.io/api/4";
+export const MP_STARTER_API_ROOT = "https://start.microprofile.io/api/6";
 
 export const MP_VERSION_LABELS: Record<string, string> = {
   MP40: "Version 4.0",
