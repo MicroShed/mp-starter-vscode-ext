@@ -40,7 +40,7 @@ export async function askForJavaSEVersion(
 }
 
 export async function askForBuildTool(supportedBuildTools: string[]): Promise<string | undefined> {
-  const supportedBuildToolsOptions : string[] = [];
+  const supportedBuildToolsOptions: string[] = [];
   for (const buildTool of supportedBuildTools) {
     const lower = buildTool.toLowerCase();
     const formattedBuildTool = lower.charAt(0).toUpperCase() + lower.substring(1);
