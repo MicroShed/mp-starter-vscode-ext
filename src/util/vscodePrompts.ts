@@ -39,6 +39,23 @@ export async function askForJavaSEVersion(
   });
 }
 
+export async function askForBuildTool(supportedBuildTools: string[]): Promise<string | undefined> {
+  const supportedBuildToolsOptions: string[] = [];
+  for (const buildTool of supportedBuildTools) {
+    const lower = buildTool.toLowerCase();
+    const formattedBuildTool = lower.charAt(0).toUpperCase() + lower.substring(1);
+    supportedBuildToolsOptions.push(formattedBuildTool);
+  }
+  const buildToolQuickPickResult = await vscode.window.showQuickPick(supportedBuildToolsOptions, {
+    ignoreFocusOut: true,
+    placeHolder: "Select a build tool.",
+  });
+  if (buildToolQuickPickResult != null) {
+    return buildToolQuickPickResult.toUpperCase();
+  }
+  return undefined;
+}
+
 export async function askForMPVersion(mpVersions: string[]): Promise<string | undefined> {
   interface MPVersionOption extends QuickPickItem {
     label: string; // label is the long-name that is displayed in vscode

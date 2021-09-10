@@ -30,6 +30,7 @@ interface SupportDetails {
   mpVersion: string;
   mpSpecs: string[];
   javaSEVersions: string[];
+  buildTools: string[];
 }
 
 export async function getSupportedJavaAndSpecs(
@@ -50,11 +51,9 @@ export async function getSupportedJavaAndSpecs(
 
   const supportJSON = await serverSupportResponse.json();
   const serverInformation = supportJSON.configs[serverName];
-
   const supportDetails: SupportDetails | undefined = serverInformation.find(
     (supportRecord: SupportDetails) => supportRecord.mpVersion === microprofileVersion
   );
-
   if (supportDetails === undefined) {
     throw new Error("Unable to find supported MicroProfile specifications and Java versions");
   }

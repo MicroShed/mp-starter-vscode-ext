@@ -35,13 +35,18 @@ export async function generateProject(): Promise<void> {
 
     // gets support information about which JavaSE versions / microprofile specs are supported by the
     // users selected mp server / mp version combination
-    const { javaSEVersions, mpSpecs } = await mpStarterApi.getSupportedJavaAndSpecs(
+    const { buildTools, javaSEVersions, mpSpecs } = await mpStarterApi.getSupportedJavaAndSpecs(
       mpServer,
       mpVersion
     );
 
     const javaSEVersion = await prompts.askForJavaSEVersion(javaSEVersions);
     if (javaSEVersion === undefined) {
+      return;
+    }
+
+    const buildTool = await prompts.askForBuildTool(buildTools);
+    if (buildTool === undefined) {
       return;
     }
 
@@ -64,6 +69,7 @@ export async function generateProject(): Promise<void> {
       mpVersion: mpVersion,
       supportedServer: mpServer,
       javaSEVersion: javaSEVersion,
+      buildTool: buildTool,
       selectedSpecs: mpSpecifications,
     };
 
