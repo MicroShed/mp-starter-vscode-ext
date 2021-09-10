@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the MicroProfile Starter extension will be documented below.
 
+## 0.2.7
+- Support for build tool selection
+- Use version 6 of the MicroProfile Starter API
+
 ## 0.2.6
 - MicroProfile 4.0
 
