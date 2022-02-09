@@ -2,7 +2,7 @@
   "name": "mp-starter-vscode-ext",
   "displayName": "MicroProfile Starter",
   "description": "Generate Java microservice Maven projects using MicroProfile",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "publisher": "MicroProfile-Community",
   "preview": true,
   "license": "Apache-2.0",
