@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to the MicroProfile Starter extension will be documented below.
 
+## 0.2.9
+- MicroProfile 5.0
+
 ## 0.2.8
 - MicroProfile 4.1
 
